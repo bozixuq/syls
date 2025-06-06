@@ -109,6 +109,12 @@ body {
     font-weight: bold;
 }
 
+.tagline {
+    font-size: 24px;
+    margin: 10px 0;
+    color: #333;
+}
+
 .delete-btn {
     background: #ff4d4d;
     border: none;
