@@ -1,13 +1,18 @@
 import { Router } from 'express';
+import {
+  getAllClients,
+  getClientById,
+  createClient,
+  updateClient,
+  deleteClient,
+} from '../controllers/clientController.js';
 
 const router = Router();
 
-router.get('/', (req, res) => {
-  res.json({ message: 'Get all clients' });
-});
-
-router.post('/', (req, res) => {
-  res.json({ message: 'Create a client' });
-});
+router.get('/', getAllClients);
+router.post('/', createClient);
+router.get('/:id', getClientById);
+router.put('/:id', updateClient);
+router.delete('/:id', deleteClient);
 
 export default router;

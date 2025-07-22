@@ -30,4 +30,9 @@ export function initDb() {
   });
 }
 
+// Initialize the database immediately so that any module importing
+// `db` can use it without needing to call `initDb` again.
+initDb();
+
+export { db };
 export default db;
