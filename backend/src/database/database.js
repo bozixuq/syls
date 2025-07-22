@@ -27,6 +27,25 @@ export function initDb() {
       status TEXT DEFAULT '初步接洽',
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP
     )`);
+
+    db.run(`CREATE TABLE IF NOT EXISTS projects (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      client_id INTEGER,
+      status TEXT NOT NULL,
+      assigned_writer TEXT,
+      delivery_date DATE,
+      FOREIGN KEY(client_id) REFERENCES clients(id)
+    )`);
+
+    db.run(`CREATE TABLE IF NOT EXISTS interviews (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      project_id INTEGER,
+      interview_date DATE NOT NULL,
+      notes TEXT,
+      audio_file_path TEXT,
+      tags TEXT,
+      FOREIGN KEY(project_id) REFERENCES projects(id)
+    )`);
   });
 }
 

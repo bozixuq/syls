@@ -1,4 +1,5 @@
 import db from '../database/database.js';
+import { createProjectForClient } from './projectController.js';
 
 export async function getAllClients(req, res) {
   try {
@@ -61,13 +62,21 @@ export async function createClient(req, res) {
         console.error(err);
         return res.status(500).json({ error: 'Database error' });
       }
-      db.get('SELECT * FROM clients WHERE id = ?', [this.lastID], (err2, row) => {
-        if (err2) {
-          console.error(err2);
-          return res.status(500).json({ error: 'Database error' });
-        }
-        res.status(201).json(row);
-      });
+      const clientId = this.lastID;
+      createProjectForClient(clientId)
+        .then(() => {
+          db.get('SELECT * FROM clients WHERE id = ?', [clientId], (err2, row) => {
+            if (err2) {
+              console.error(err2);
+              return res.status(500).json({ error: 'Database error' });
+            }
+            res.status(201).json(row);
+          });
+        })
+        .catch((e) => {
+          console.error(e);
+          res.status(500).json({ error: 'Database error' });
+        });
     });
   } catch (error) {
     res.status(500).json({ error: error.message });
